@@ -1,6 +1,6 @@
 [package]
 name = "derp-client-verifier"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 repository = "https://github.com/wzv5/derp-client-verifier"
 
