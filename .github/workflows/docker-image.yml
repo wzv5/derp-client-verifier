@@ -23,13 +23,6 @@ jobs:
       - run: |
           tar -xvf artifacts/derp-client-verifier-x86_64-unknown-linux-gnu.tar.xz
           cp derp-client-verifier-x86_64-unknown-linux-gnu/derp-client-verifier .
-      
-      - uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          logout: false
 
       - uses: docker/login-action@v3
         with:
@@ -42,7 +35,5 @@ jobs:
           file: dist.Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ github.actor }}/derp-client-verifier:${{ env.APP_VERSION }}
-            ghcr.io/${{ github.actor }}/derp-client-verifier:latest
             ${{ github.actor }}/derp-client-verifier:${{ env.APP_VERSION }}
             ${{ github.actor }}/derp-client-verifier:latest
