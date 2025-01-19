@@ -1,0 +1,32 @@
+services:
+
+  derper:
+    image: fredliang/derper:latest
+    restart: always
+    depends_on:
+      - derp-client-verifier
+    ports:
+      - 11443:11443/tcp
+      - 11443:11443/udp
+    entrypoint:
+      - /app/derper
+      - --a=:11443
+      - --stun-port=11443
+      - --http-port=-1
+      - --verify-client-url-fail-open=false
+      - --verify-client-url=http://derp-client-verifier:8080/
+      - --hostname=your-hostname.com
+      - --certmode=manual
+      - --certdir=/app/data/cert
+    volumes:
+      - ./data/cert:/app/data/cert:ro
+
+  derp-client-verifier:
+    image: wzv5/derp-client-verifier:latest
+    command:
+      - --addr
+      - 0.0.0.0:8080
+      - --list
+      - /app/client_list.txt
+    volumes:
+      - ./data/client_list.txt:/app/client_list.txt:ro
